@@ -1,18 +1,24 @@
 import React, { PropTypes } from 'react'
 import Tweet from './Tweet'
 
-const TweetList = ({ tweets }) => (
-  <div className="tweet-list">
-    { tweets.map(tweet => <Tweet key={tweet.id} {...tweet} />) }
-  </div>
-)
+class TweetList extends React.Component {
+  componentDidMount() {
+    this.props.fetchTweets('kaizerwing')
+  }
 
-TweetList.propTypes = {
-  tweets: PropTypes.arrayOf(PropTypes.object),
-}
+  PropTypes = {
+    tweets: PropTypes.arrayOf(PropTypes.object),
+  }
 
-TweetList.defaultProps = {
-  tweets: [],
+  render() {
+    return (
+      <div className="tweet-list">
+        { this.props.tweets.map(tweet =>
+          <Tweet key={tweet.id} {...tweet} />)
+        }
+      </div>
+    )
+  }
 }
 
 export default TweetList
