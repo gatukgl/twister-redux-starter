@@ -1,4 +1,5 @@
 import React from 'react'
+import { push as redirect } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { login } from '../actions/auth'
@@ -11,6 +12,18 @@ class LoginForm extends React.Component {
 
   submitLogin = values => {
     this.props.login(values.username, values.password)
+  }
+
+  componentWillMount() {
+    if (this.props.token) {
+      this.props.redirect('/')
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.token) {
+      this.props.redirect('/')
+    }
   }
 
   render() {
@@ -40,9 +53,20 @@ class LoginForm extends React.Component {
   }
 }
 
+LoginForm.propTypes = {
+  handleSubmit: React.PropTypes.func,
+  login: React.PropTypes.func,
+  redirect: React.PropTypes.func.isRequired,
+  token: React.PropTypes.string,
+}
+
+const mapStateToProps = state => ({
+  token: state.auth.token,
+})
+
 const LoginReduxForm = reduxForm({
   form: 'login'
 })(LoginForm)
 
 // export default connect(null, mapDispatchToProps)(LoginReduxForm)
-export default connect(null, { login })(LoginReduxForm)
+export default connect(mapStateToProps, { login, redirect })(LoginReduxForm)
