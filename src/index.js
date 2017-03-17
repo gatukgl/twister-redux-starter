@@ -9,6 +9,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import rootReducer from './reducers'
 import { loader } from './utils/localStorage'
 import { loadState, saveState } from './utils/localStorage'
+import throttle from 'lodash.throttle'
 
 import './styles/custom.scss'
 import './styles/main.scss'
@@ -26,11 +27,11 @@ const store = createStore(
   )
 )
 
-store.subscribe(() => {
+store.subscribe(throttle(() => {
   saveState({
     auth: store.getState().auth,
   })
-})
+}), 1000)
 
 const render = (Component) => {
   ReactDOM.render(
