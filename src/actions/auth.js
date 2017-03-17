@@ -1,4 +1,7 @@
-import { AUTH_LOGIN_SUCCESS } from './types'
+import {
+  AUTH_LOGIN_SUCCESS,
+  AUTH_LOGOUT,
+} from './types'
 import config from '../config'
 
 const { host, port } = config.api
@@ -39,4 +42,8 @@ const login = (username, password) => dispatch => {
     .catch(e => console.log('Cannot login', e))
 }
 
-export { login }
+const logout = () => ({
+  type: AUTH_LOGOUT
+})
+
+export { login, logout }
