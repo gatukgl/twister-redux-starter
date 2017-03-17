@@ -10,11 +10,9 @@ import './styles/custom.scss'
 import './styles/main.scss'
 import App from './components/App'
 
-const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENTION_COMPOSE__ || compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   rootReducer,
-  reduxDevTools,
   composeEnhancers(
     applyMiddleware(thunk)
   )
